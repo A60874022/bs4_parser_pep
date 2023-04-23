@@ -1,11 +1,12 @@
 # configs.py
 import argparse
-from constants import BASE_DIR
 import logging
 # хендлер с ротацией логов.
 from logging.handlers import RotatingFileHandler
 
-# Описание формата логов: 
+from constants import BASE_DIR
+
+# Описание формата логов:
 # Время записи – Уровень сообщения – Cообщение.
 LOG_FORMAT = '"%(asctime)s - [%(levelname)s] - %(message)s"'
 # Указываем формат времени.
@@ -23,8 +24,7 @@ def configure_argument_parser(available_modes):
         '-c',
         '--clear-cache',
         action='store_true',
-        help='Очистка кеша'
-    )
+        help='Очистка кеша')
     # Новый аргумент --output вместо аргумента --pretty
     parser.add_argument(
         '-o',
@@ -33,17 +33,17 @@ def configure_argument_parser(available_modes):
         help='Дополнительные способы вывода данных'
     )
     return parser
+# Обновите код этой функции. Она отвечает за конфигурацию логов.
 
-    # Обновите код этой функции. Она отвечает за конфигурацию логов. 
+
 def configure_logging():
     log_dir = BASE_DIR / 'logs'
     log_dir.mkdir(exist_ok=True)
     # Отсюда начинается новый код!
     # Получение абсолютного пути до файла с логами.
     log_file = log_dir / 'parser.log'
-    
     # Инициализация хендлера с ротацией логов.
-    # Максимальный объём одного файла — десять в шестой степени байт (10**6), 
+    # Максимальный объём одного файла — десять в шестой степени байт (10**6),
     # максимальное количество файлов с логами — 5.
     rotating_handler = RotatingFileHandler(
         log_file, maxBytes=10 ** 6, backupCount=5
@@ -55,5 +55,4 @@ def configure_logging():
         # Уровень записи логов.
         level=logging.INFO,
         # Вывод логов в терминал.
-        handlers=(rotating_handler, logging.StreamHandler())
-    ) 
+        handlers=(rotating_handler, logging.StreamHandler()))
